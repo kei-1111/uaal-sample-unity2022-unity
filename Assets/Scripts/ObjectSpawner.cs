@@ -29,6 +29,7 @@ public class ObjectSpawner : MonoBehaviour
             // Rigidbodyを追加して物理演算を有効化
             var rb = objectPrefab.AddComponent<Rigidbody>();
             rb.useGravity = true;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
             objectPrefab.SetActive(false);
         }
@@ -64,6 +65,7 @@ public class ObjectSpawner : MonoBehaviour
         {
             var rb = spawnedObject.AddComponent<Rigidbody>();
             rb.useGravity = true;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
         }
 
         // カウントを増やす
