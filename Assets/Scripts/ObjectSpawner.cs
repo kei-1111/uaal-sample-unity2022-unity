@@ -11,30 +11,6 @@ public class ObjectSpawner : MonoBehaviour
     [Header("Counter Settings")]
     [SerializeField] private int objectCount = 0; // 落下したオブジェクトのカウント
 
-    private void Start()
-    {
-        // Prefabが設定されていない場合は、デフォルトで球体を作成
-        if (objectPrefab == null)
-        {
-            objectPrefab = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            objectPrefab.transform.localScale = Vector3.one * 0.5f;
-
-            // マテリアルを設定（ランダムカラー用）
-            var renderer = objectPrefab.GetComponent<Renderer>();
-            if (renderer != null)
-            {
-                renderer.material = new Material(Shader.Find("Standard"));
-            }
-
-            // Rigidbodyを追加して物理演算を有効化
-            var rb = objectPrefab.AddComponent<Rigidbody>();
-            rb.useGravity = true;
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-            objectPrefab.SetActive(false);
-        }
-    }
-
     /// <summary>
     /// オブジェクトを生成して落下させる
     /// </summary>
@@ -45,14 +21,26 @@ public class ObjectSpawner : MonoBehaviour
         float randomZ = Random.Range(-spawnRangeZ, spawnRangeZ);
         Vector3 spawnPosition = new Vector3(randomX, spawnHeight, randomZ);
 
-        // オブジェクトを生成
-        GameObject spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
-        spawnedObject.SetActive(true);
+        // オブジェクトを生成（Prefabが設定されていない場合はプリミティブを作成）
+        GameObject spawnedObject;
+        if (objectPrefab != null)
+        {
+            spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
+        }
+        else
+        {
+            spawnedObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            spawnedObject.transform.position = spawnPosition;
+            spawnedObject.transform.localScale = Vector3.one * 0.5f;
+            spawnedObject.name = $"Sphere_{objectCount + 1}";
+        }
 
         // ランダムな色を設定
         var renderer = spawnedObject.GetComponent<Renderer>();
         if (renderer != null)
         {
+            // 新しいマテリアルインスタンスを作成してカラーを設定
+            renderer.material = new Material(renderer.material);
             renderer.material.color = new Color(
                 Random.Range(0f, 1f),
                 Random.Range(0f, 1f),
@@ -70,7 +58,6 @@ public class ObjectSpawner : MonoBehaviour
 
         // カウントを増やす
         objectCount++;
-        Debug.Log($"Object spawned! Total count: {objectCount}");
 
         // 5の倍数チェック
         if (objectCount % 5 == 0)
@@ -87,8 +74,6 @@ public class ObjectSpawner : MonoBehaviour
     /// </summary>
     private void OnMultipleOfFive()
     {
-        Debug.Log($"★★★ Count reached multiple of 5: {objectCount} ★★★");
-
         // ここでAndroidに通知する（後で実装）
         // 例: AndroidBridge経由で通知
     }
@@ -107,7 +92,6 @@ public class ObjectSpawner : MonoBehaviour
     public void ResetCount()
     {
         objectCount = 0;
-        Debug.Log("Count reset to 0");
     }
 
     // テスト用: Spaceキーで落下テスト
