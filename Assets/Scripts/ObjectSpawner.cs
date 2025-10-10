@@ -2,18 +2,12 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    [Header("Spawn Settings")]
-    [SerializeField] private GameObject objectPrefab; // 落とすオブジェクトのPrefab
-    [SerializeField] private float spawnHeight = 10f; // 落下開始の高さ
-    [SerializeField] private float spawnRangeX = 5f; // X軸のランダム範囲
-    [SerializeField] private float spawnRangeZ = 5f; // Z軸のランダム範囲
+    [SerializeField] private float spawnHeight = 10f;
+    [SerializeField] private float spawnRangeX = 5f;
+    [SerializeField] private float spawnRangeZ = 5f;
 
-    [Header("Counter Settings")]
-    [SerializeField] private int objectCount = 0; // 落下したオブジェクトのカウント
+    private int objectCount = 0;
 
-    /// <summary>
-    /// オブジェクトを生成して落下させる
-    /// </summary>
     public void SpawnObject()
     {
         // ランダムな位置を計算
@@ -21,40 +15,13 @@ public class ObjectSpawner : MonoBehaviour
         float randomZ = Random.Range(-spawnRangeZ, spawnRangeZ);
         Vector3 spawnPosition = new Vector3(randomX, spawnHeight, randomZ);
 
-        // オブジェクトを生成（Prefabが設定されていない場合はプリミティブを作成）
-        GameObject spawnedObject;
-        if (objectPrefab != null)
-        {
-            spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
-        }
-        else
-        {
-            spawnedObject = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            spawnedObject.transform.position = spawnPosition;
-            spawnedObject.transform.localScale = Vector3.one * 0.5f;
-            spawnedObject.name = $"Sphere_{objectCount + 1}";
-        }
+        // Sphereを生成
+        GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        sphere.transform.position = spawnPosition;
 
-        // ランダムな色を設定
-        var renderer = spawnedObject.GetComponent<Renderer>();
-        if (renderer != null)
-        {
-            // 新しいマテリアルインスタンスを作成してカラーを設定
-            renderer.material = new Material(renderer.material);
-            renderer.material.color = new Color(
-                Random.Range(0f, 1f),
-                Random.Range(0f, 1f),
-                Random.Range(0f, 1f)
-            );
-        }
-
-        // Rigidbodyがない場合は追加
-        if (spawnedObject.GetComponent<Rigidbody>() == null)
-        {
-            var rb = spawnedObject.AddComponent<Rigidbody>();
-            rb.useGravity = true;
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        }
+        // Rigidbodyを追加
+        Rigidbody rb = sphere.AddComponent<Rigidbody>();
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 
         // カウントを増やす
         objectCount++;
@@ -65,8 +32,8 @@ public class ObjectSpawner : MonoBehaviour
             OnMultipleOfFive();
         }
 
-        // 一定時間後にオブジェクトを削除（メモリ節約）
-        Destroy(spawnedObject, 10f);
+        // 10秒後に削除
+        Destroy(sphere, 10f);
     }
 
     /// <summary>
