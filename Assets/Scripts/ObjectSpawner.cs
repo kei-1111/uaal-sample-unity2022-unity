@@ -41,8 +41,8 @@ public class ObjectSpawner : MonoBehaviour
     /// </summary>
     private void OnMultipleOfFive()
     {
-        // ここでAndroidに通知する（後で実装）
-        // 例: AndroidBridge経由で通知
+        AndroidJavaObject androidMessenger = new AndroidJavaObject("io.github.kei_1111.uaal_sample.UnityMessageReceiver");
+        androidMessenger.Call("sendMessage", objectCount.ToString());
     }
 
     /// <summary>
