@@ -13,11 +13,11 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: uaal-sample
+  productName: uaal-sample-unity2022-unity
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  m_ShowUnitySplashScreen: 1
+  m_ShowUnitySplashScreen: 0
   m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
   m_SplashScreenAnimation: 1
@@ -163,7 +163,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.DefaultCompany.uaalsample
+    Android: com.DefaultCompany.uaalsampleunity2022unity
   buildNumber:
     Standalone: 0
     VisionOS: 0
@@ -776,14 +776,14 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: uaal-sample
+  metroPackageName: uaal-sample-unity2022-unity
   metroPackageVersion: 
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
   metroCertificateIssuer: 
   metroCertificateNotAfter: 0000000000000000
-  metroApplicationDescription: uaal-sample
+  metroApplicationDescription: uaal-sample-unity2022-unity
   wsaImages: {}
   metroTileShortName: 
   metroTileShowName: 0
@@ -856,7 +856,7 @@ PlayerSettings:
   cloudProjectId: 25b09fac-9cd1-4145-a467-327a6ab646bb
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: uaal-sample 2025-10-10_23-40-50
+  projectName: uaal-sample-unity2022-unity 2025-10-10_23-40-50
   organizationId: b1021116
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

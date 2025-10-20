@@ -41,7 +41,7 @@ public class ObjectSpawner : MonoBehaviour
     /// </summary>
     private void OnMultipleOfFive()
     {
-        AndroidJavaObject androidMessenger = new AndroidJavaObject("io.github.kei_1111.uaal_sample.UnityMessageReceiver");
+        AndroidJavaObject androidMessenger = new AndroidJavaObject("io.github.kei_1111.uaal_sample_unity2022_android.UnityMessageReceiver");
         androidMessenger.Call("sendMessage", objectCount.ToString());
     }
 
